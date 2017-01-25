@@ -1,6 +1,10 @@
-# Composer NPM bridge
+# Composer Bower bridge
 
-*NPM integration for Composer packages.*
+*Bower integration for Composer packages.*
+*Based on the package [eloquent/composer-npm-bridge]*
+[eloquent/composer-npm-bridge]: https://packagist.org/packages/eloquent/composer-npm-bridge
+
+
 
 [![Current version image][version-image]][current version]
 [![Current build status image][build-image]][current build status]
@@ -15,10 +19,10 @@
 
 ## Installation
 
-* Available as [Composer] package [eloquent/composer-npm-bridge].
+* Available as [Composer] package [peertopark/composer-bower-bridge].
 
 [composer]: http://getcomposer.org/
-[eloquent/composer-npm-bridge]: https://packagist.org/packages/eloquent/composer-npm-bridge
+[peertopark/composer-bower-bridge]: https://packagist.org/packages/peertopark/composer-bower-bridge
 
 ## Requirements
 
