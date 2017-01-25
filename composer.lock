@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3b5a025d36e1875c1356b114fac040e6",
-    "content-hash": "bcd34fb32f9074c4da3543d03f7a22b5",
+    "hash": "3a56c4244d74b29cddef1499f72a9bbd",
+    "content-hash": "bc2ed61140a0c5120aba7252d3e0840c",
     "packages": [
         {
             "name": "eloquent/composer-npm-bridge",

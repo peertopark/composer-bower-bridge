@@ -9,26 +9,33 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\NpmBridge;
+namespace Peertopark\Composer\BowerBridge;
 
 use Composer\Util\ProcessExecutor;
-use Eloquent\Composer\NpmBridge\Exception\NpmCommandFailedException;
-use Eloquent\Composer\NpmBridge\Exception\NpmNotFoundException;
+use Peertopark\Composer\BowerBridge\Exception\BowerCommandFailedException;
+use Peertopark\Composer\BowerBridge\Exception\BowerNotFoundException;
 use Symfony\Component\Process\ExecutableFinder;
 
 /**
  * A simple client for performing NPM operations.
  */
-class NpmClient
-{
+class BowerClient {
+    
+    private $processExecutor;
+    private $executableFinder;
+    private $getcwd;
+    private $chdir;
+    private $bowerPath;
+
     /**
-     * Create a new NPM client.
+     * Create a new Bower client.
      *
      * @return self The newly created client.
      */
-    public static function create()
-    {
-        return new self(new ProcessExecutor(), new ExecutableFinder());
+    public static function create() {
+        $executor = new ProcessExecutor();
+        $finder = new ExecutableFinder();
+        return new self($executor, $finder);
     }
 
     /**
@@ -41,12 +48,7 @@ class NpmClient
      * @param callable         $getcwd           The getcwd() implementation to use.
      * @param callable         $chdir            The chdir() implementation to use.
      */
-    public function __construct(
-        ProcessExecutor $processExecutor,
-        ExecutableFinder $executableFinder,
-        $getcwd = 'getcwd',
-        $chdir = 'chdir'
-    ) {
+    public function __construct(ProcessExecutor $processExecutor, ExecutableFinder $executableFinder, $getcwd = 'getcwd', $chdir = 'chdir') {
         $this->processExecutor = $processExecutor;
         $this->executableFinder = $executableFinder;
         $this->getcwd = $getcwd;
@@ -59,22 +61,20 @@ class NpmClient
      * @param string|null  $path      The path to the NPM project, or null to use the current working directory.
      * @param boolean|null $isDevMode True if dev dependencies should be included.
      *
-     * @throws NpmNotFoundException      If the npm executable cannot be located.
-     * @throws NpmCommandFailedException If the operation fails.
+     * @throws BowerNotFoundException      If the npm executable cannot be located.
+     * @throws BowerCommandFailedException If the operation fails.
      */
-    public function install($path = null, $isDevMode = null)
-    {
+    public function install($path = null, $isDevMode = null) {
         if (null === $isDevMode) {
             $isDevMode = true;
         }
-
         if ($isDevMode) {
             $arguments = array('install');
         } else {
             $arguments = array('install', '--production');
         }
 
-        $this->executeNpm($arguments, $path);
+        $this->executeBower($arguments, $path);
     }
 
     /**
@@ -82,30 +82,15 @@ class NpmClient
      *
      * @param string|null $path The path to the NPM project, or null to use the current working directory.
      *
-     * @throws NpmNotFoundException      If the npm executable cannot be located.
-     * @throws NpmCommandFailedException If the operation fails.
+     * @throws BowerNotFoundException      If the npm executable cannot be located.
+     * @throws BowerCommandFailedException If the operation fails.
      */
-    public function update($path = null)
-    {
-        $this->executeNpm(array('update'), $path);
+    public function update($path = null) {
+        $this->executeBower(array('update'), $path);
     }
 
-    /**
-     * Shrink-wrap NPM dependencies for the project at the supplied path.
-     *
-     * @param string|null $path The path to the NPM project, or null to use the current working directory.
-     *
-     * @throws NpmNotFoundException      If the npm executable cannot be located.
-     * @throws NpmCommandFailedException If the operation fails.
-     */
-    public function shrinkwrap($path = null)
-    {
-        $this->executeNpm(array('shrinkwrap'), $path);
-    }
-
-    private function executeNpm($arguments, $workingDirectoryPath)
-    {
-        array_unshift($arguments, $this->npmPath());
+    private function executeBower($arguments, $workingDirectoryPath) {
+        array_unshift($arguments, $this->bowerPath());
         $command = implode(' ', array_map('escapeshellarg', $arguments));
 
         if (null !== $workingDirectoryPath) {
@@ -120,26 +105,18 @@ class NpmClient
         }
 
         if (0 !== $exitCode) {
-            throw new NpmCommandFailedException($command);
+            throw new BowerCommandFailedException($command);
         }
     }
 
-    private function npmPath()
-    {
-        if (null === $this->npmPath) {
-            $this->npmPath = $this->executableFinder->find('npm');
-
-            if (null === $this->npmPath) {
-                throw new NpmNotFoundException();
+    private function bowerPath() {
+        if (null === $this->bowerPath) {
+            $this->bowerPath = $this->executableFinder->find('bower', 'node_modules/.bin/bower');
+            if (null === $this->bowerPath) {
+                throw new BowerNotFoundException();
             }
         }
-
-        return $this->npmPath;
+        return $this->bowerPath;
     }
 
-    private $processExecutor;
-    private $executableFinder;
-    private $getcwd;
-    private $chdir;
-    private $npmPath;
 }

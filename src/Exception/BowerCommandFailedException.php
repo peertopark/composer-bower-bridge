@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\NpmBridge\Exception;
+namespace Peertopark\Composer\BowerBridge\Exception;
 
 use Exception;
 
 /**
  * The NPM command failed.
  */
-final class NpmCommandFailedException extends Exception
+final class BowerCommandFailedException extends Exception
 {
     /**
      * Construct a new NPM command failed exception.

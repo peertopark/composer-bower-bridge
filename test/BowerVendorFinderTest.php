@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\NpmBridge;
+namespace Peertopark\Composer\BowerBridge;
 
 use Composer\Composer;
 use Composer\IO\NullIO;
@@ -19,17 +19,16 @@ use Composer\Repository\ArrayRepository;
 use Eloquent\Phony\Phpunit\Phony;
 use PHPUnit_Framework_TestCase;
 
-class NpmVendorFinderTest extends PHPUnit_Framework_TestCase
-{
-    protected function setUp()
-    {
-        $this->finder = new NpmVendorFinder();
+class BowerVendorFinderTest extends PHPUnit_Framework_TestCase {
+
+    protected function setUp() {
+        $this->finder = new BowerVendorFinder();
 
         $this->composer = new Composer();
         $this->repositoryManager = Phony::mock('Composer\Repository\RepositoryManager');
         $this->localRepository = new ArrayRepository();
 
-        $this->bridge = NpmBridgeFactory::create()->createBridge(new NullIO());
+        $this->bridge = BowerBridgeFactory::create()->createBridge(new NullIO());
 
         $this->packageA = new Package('vendorA/packageA', '1.0.0.0', '1.0.0');
         $this->packageB = new Package('vendorB/packageB', '1.0.0.0', '1.0.0');
@@ -39,10 +38,10 @@ class NpmVendorFinderTest extends PHPUnit_Framework_TestCase
         $this->linkA1 = new Link('vendorA/packageA', 'vendorX/packageX');
         $this->linkA2 = new Link('vendorA/packageA', 'vendorY/packageY');
         $this->linkB1 = new Link('vendorB/packageB', 'vendorZ/packageZ');
-        $this->linkB2 = new Link('vendorB/packageB', 'eloquent/composer-npm-bridge');
+        $this->linkB2 = new Link('vendorB/packageB', 'peertopark/composer-bower-bridge');
         $this->linkC1 = new Link('vendorC/packageC', 'vendorZ/packageZ');
-        $this->linkC2 = new Link('vendorC/packageC', 'eloquent/composer-npm-bridge');
-        $this->linkD1 = new Link('vendorD/packageD', 'eloquent/composer-npm-bridge');
+        $this->linkC2 = new Link('vendorC/packageC', 'peertopark/composer-bower-bridge');
+        $this->linkD1 = new Link('vendorD/packageD', 'peertopark/composer-bower-bridge');
         $this->linkD2 = new Link('vendorD/packageD', 'vendorZ/packageZ');
 
         $this->composer->setRepositoryManager($this->repositoryManager->mock());
@@ -59,8 +58,8 @@ class NpmVendorFinderTest extends PHPUnit_Framework_TestCase
         $this->packageD->setRequires(array($this->linkD1, $this->linkD2));
     }
 
-    public function testFind()
-    {
+    public function testFind() {
         $this->assertSame(array($this->packageB, $this->packageD), $this->finder->find($this->composer, $this->bridge));
     }
+
 }

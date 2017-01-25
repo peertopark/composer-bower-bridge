@@ -2,7 +2,7 @@
     "name": "peertopark/composer-bower-bridge",
     "description": "Bower integration for Composer packages.",
     "keywords": ["composer", "bower", "package", "integration", "bridge", "plugin", "composer-plugin"],
-    "homepage": "https://github.com/eloquent/composer-npm-bridge",
+    "homepage": "https://github.com/peertopark/composer-bower-bridge",
     "license": "MIT",
     "authors": [
         {
@@ -25,15 +25,15 @@
     },
     "autoload": {
         "psr-4": {
-            "Eloquent\\Composer\\NpmBridge\\": "src/"
+            "Peertopark\\Composer\\BowerBridge\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Eloquent\\Composer\\NpmBridge\\": "test/"
+            "Peertopark\\Composer\\BowerBridge\\": "test/"
         }
     },
     "extra": {
-        "class": "Eloquent\\Composer\\NpmBridge\\NpmBridgePlugin"
+        "class": "Peertopark\\Composer\\BowerBridge\\BowerBridgePlugin"
     }
 }

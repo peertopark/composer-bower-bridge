@@ -9,24 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\NpmBridge;
+namespace Peertopark\Composer\BowerBridge;
 
 use Composer\IO\NullIO;
 use PHPUnit_Framework_TestCase;
 
-class NpmBridgeFactoryTest extends PHPUnit_Framework_TestCase
-{
-    protected function setUp()
-    {
-        $this->factory = NpmBridgeFactory::create();
+class BowerBridgeFactoryTest extends PHPUnit_Framework_TestCase {
 
+    protected function setUp() {
+        $this->factory = BowerBridgeFactory::create();
         $this->io = new NullIO();
     }
 
-    public function testCreateBridge()
-    {
-        $expected = new NpmBridge($this->io, new NpmVendorFinder(), NpmClient::create());
+    public function testCreateBridge() {
+        $expected = new BowerBridge($this->io, new BowerVendorFinder(), BowerClient::create());
 
         $this->assertEquals($expected, $this->factory->createBridge($this->io));
     }
+
 }

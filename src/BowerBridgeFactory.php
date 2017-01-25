@@ -9,26 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace Eloquent\Composer\NpmBridge;
+namespace Peertopark\Composer\BowerBridge;
 
 use Composer\IO\IOInterface;
 
 /**
  * Creates NPM bridges.
  */
-class NpmBridgeFactory
-{
+class BowerBridgeFactory {
+
+    private $vendorFinder;
+    private $client;
+
     /**
      * Create a new NPM bridge factory.
      *
      * @return self The newly created factory.
      */
-    public static function create()
-    {
-        return new self(
-            new NpmVendorFinder(),
-            NpmClient::create()
-        );
+    public static function create() {
+        return new BowerBridgeFactory(new BowerVendorFinder(), BowerClient::create());
     }
 
     /**
@@ -36,13 +35,10 @@ class NpmBridgeFactory
      *
      * @access private
      *
-     * @param NpmVendorFinder $vendorFinder The vendor finder to use.
-     * @param NpmClient       $client       The client to use.
+     * @param BowerVendorFinder $vendorFinder The vendor finder to use.
+     * @param BowerClient       $client       The client to use.
      */
-    public function __construct(
-        NpmVendorFinder $vendorFinder,
-        NpmClient $client
-    ) {
+    public function __construct(BowerVendorFinder $vendorFinder, BowerClient $client) {
         $this->vendorFinder = $vendorFinder;
         $this->client = $client;
     }
@@ -52,11 +48,8 @@ class NpmBridgeFactory
      *
      * @param IOInterface $io The i/o interface to use.
      */
-    public function createBridge(IOInterface $io)
-    {
-        return new NpmBridge($io, $this->vendorFinder, $this->client);
+    public function createBridge(IOInterface $io) {
+        return new BowerBridge($io, $this->vendorFinder, $this->client);
     }
 
-    private $vendorFinder;
-    private $client;
 }
