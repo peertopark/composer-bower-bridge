@@ -1,0 +1,7 @@
+{
+  "name": "composer-bower-bridge",
+  "version": "0.0.1",
+  "description": "Connect bower to composer",
+  "author": "",
+  "license": "MIT"
+}
