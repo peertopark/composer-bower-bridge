@@ -14,6 +14,8 @@ namespace Peertopark\Composer\BowerBridge;
 use Composer\IO\NullIO;
 use PHPUnit_Framework_TestCase;
 
+use Eloquent\Composer\NpmBridge\Core\VendorFinder;
+
 class BowerBridgeFactoryTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp() {
@@ -22,7 +24,7 @@ class BowerBridgeFactoryTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testCreateBridge() {
-        $expected = new BowerBridge($this->io, new BowerVendorFinder(), BowerClient::create());
+        $expected = new BowerBridge($this->io, VendorFinder::create(), BowerClient::create());
 
         $this->assertEquals($expected, $this->factory->createBridge($this->io));
     }

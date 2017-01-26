@@ -15,12 +15,11 @@
     "require": {
         "php": ">=5.3",
         "composer-plugin-api": "^1",
-        "eloquent/composer-npm-bridge": "^3.0"
+        "eloquent/composer-npm-bridge": "dev-develop"
     },
     "require-dev": {
-        "composer/composer": "dev-master",
+        "composer/composer": "^1",
         "eloquent/phony": "^0.8",
-        "icecave/archer": "dev-develop",
         "phpunit/phpunit": "^4"
     },
     "autoload": {

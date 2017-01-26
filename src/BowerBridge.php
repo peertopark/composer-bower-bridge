@@ -16,11 +16,13 @@ use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Peertopark\Composer\BowerBridge\Exception\BowerCommandFailedException;
 use Peertopark\Composer\BowerBridge\Exception\BowerNotFoundException;
+use Eloquent\Composer\NpmBridge\Core\VendorFinder;
+use Eloquent\Composer\NpmBridge\Core\BridgeInterface;
 
 /**
  * Manages NPM installs, updates, and shrinkwrapping for Composer projects.
  */
-class BowerBridge {
+class BowerBridge implements BridgeInterface {
 
     private $io;
     private $vendorFinder;
@@ -32,10 +34,10 @@ class BowerBridge {
      * @access private
      *
      * @param IOInterface     $io           The i/o interface to use.
-     * @param BowerVendorFinder $vendorFinder The vendor finder to use.
+     * @param VendorFinder $vendorFinder The vendor finder to use.
      * @param BowerClient       $client       The NPM client to use.
      */
-    public function __construct(IOInterface $io, BowerVendorFinder $vendorFinder, BowerClient $client) {
+    public function __construct(IOInterface $io, VendorFinder $vendorFinder, BowerClient $client) {
         $this->io = $io;
         $this->vendorFinder = $vendorFinder;
         $this->client = $client;

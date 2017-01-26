@@ -22,7 +22,7 @@ class BowerBridgeTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp() {
         $this->io = Phony::mock('Composer\IO\IOInterface');
-        $this->vendorFinder = Phony::mock('Peertopark\Composer\BowerBridge\BowerVendorFinder');
+        $this->vendorFinder = Phony::mock('Eloquent\Composer\NpmBridge\Core\VendorFinder');
         $this->client = Phony::mock('Peertopark\Composer\BowerBridge\BowerClient');
         $this->bridge = new BowerBridge($this->io->mock(), $this->vendorFinder->mock(), $this->client->mock());
 

@@ -12,6 +12,7 @@
 namespace Peertopark\Composer\BowerBridge;
 
 use Composer\IO\IOInterface;
+use Eloquent\Composer\NpmBridge\Core\VendorFinder;
 
 /**
  * Creates NPM bridges.
@@ -27,7 +28,7 @@ class BowerBridgeFactory {
      * @return self The newly created factory.
      */
     public static function create() {
-        return new BowerBridgeFactory(new BowerVendorFinder(), BowerClient::create());
+        return new BowerBridgeFactory(VendorFinder::create(), BowerClient::create());
     }
 
     /**
@@ -35,10 +36,10 @@ class BowerBridgeFactory {
      *
      * @access private
      *
-     * @param BowerVendorFinder $vendorFinder The vendor finder to use.
+     * @param VendorFinder $vendorFinder The vendor finder to use.
      * @param BowerClient       $client       The client to use.
      */
-    public function __construct(BowerVendorFinder $vendorFinder, BowerClient $client) {
+    public function __construct(VendorFinder $vendorFinder, BowerClient $client) {
         $this->vendorFinder = $vendorFinder;
         $this->client = $client;
     }
