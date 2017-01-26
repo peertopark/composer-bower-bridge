@@ -1,7 +1,7 @@
 # Composer Bower bridge
 
 *Bower integration for Composer packages.*
-*Based on the package [eloquent/composer-npm-bridge]*
+*Based on the on (and shamelessly stolen from) [eloquent/composer-npm-bridge]*
 [eloquent/composer-npm-bridge]: https://packagist.org/packages/eloquent/composer-npm-bridge
 
 
